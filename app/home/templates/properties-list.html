@@ -1,0 +1,249 @@
+{% extends "layouts/base.html" %}
+{% block title %} Property List {% endblock %} 
+{% block stylesheets %}
+	<style>
+		.pac-container {
+				z-index: 10000 !important;
+		}
+	</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+		<div class="page-inner">
+			<div class="page-header">
+				<h4 class="page-title">Properties</h4>
+				<ul class="breadcrumbs">
+					<li class="nav-home">
+						<a href="#">
+							<i class="flaticon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">Properties List</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="d-flex align-items-center">
+								<h4 class="card-title">Property List</h4>
+								<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addAddressModal">
+									<i class="fa fa-plus"></i>
+									Add Property
+								</button>
+							</div>
+						</div>
+						
+						<div class="card-body">
+							<!-- ADD PROPERTY modal -->
+							<!-- TODO make this in to a component/jinja block -->
+							<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<!-- HEADER -->
+										<div class="modal-header no-bd">
+											<h5 class="modal-title">
+												<span class="fw-mediumbold"> New Property</span> 
+											</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<!-- BODY -->
+										<div class="modal-body">
+											<form id="addAddressForm" method="POST" action="/add-property">
+												<p class="small">Add a new property by entering the address.</p>
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="form-group form-group-default">
+															<label>Address</label>
+															<input id="addAddress" name="address" type="text" class="form-control" placeholder="Enter a location"/>
+														</div>
+													</div>
+												</div>
+												<!-- FOOTER -->
+												<div class="modal-footer no-bd">
+													<button type="submit" id="addAddressButton" class="btn btn-primary">Add</button>
+													<button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END new property form -->
+
+	
+							<!-- Table content -->
+							<div class="table-responsive">
+								<table id="multi-filter-select" class="display table table-striped table-hover" >
+									<thead>
+										<tr>
+											<th>Adress</th>
+											<th>State</th>
+											<th>Beds</th>
+											<th>Baths</th>
+											<th>Car spaces</th>
+											<th>Valuation</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th>Adress</th>
+											<th>State</th>
+											<th>Beds</th>
+											<th>Baths</th>
+											<th>Car Spaces</th>
+											<th>Valuation</th>
+											<th style="width: 10%;">Action</th>
+										</tr>
+									</tfoot>
+									<tbody>
+										{% for prop in properties %}
+											<tr id={{prop.propertyID}} >
+												<td> 
+													<a href="/property/{{prop.propertyId}}">
+														{{ prop.address[0].street }} 
+													</a>
+												</td>
+												<td> {{ prop.address[0].state }} </td>
+												<td> {{ prop.bedrooms }} </td>
+												<td> {{ prop.bathrooms }} </td>
+												<td> {{ prop.carSpaces }} </td>
+												<td> {{ prop.valuation }} </td>
+												<td>
+													<div class="form-button-action">
+														<button type="submit" class="btn btn-link" onclick="location.href='/property/{{prop.propertyId}}'">
+															<i class="far fa-edit fa-lg"></i>
+														</button>
+														<button type="submit" class="btn btn-link btn-danger" data-toggle="modal" data-target="#confirmDelete"
+															data-prop-id="{{prop.propertyId}}" data-prop-info="{{prop.address[0].description}}">
+															<i class="fas fa-trash-alt fa-lg"></i>
+														</button>
+													</div>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+
+							<!-- DELETE modal -->
+							<!-- TODO might be able to submiting the form through this -->
+							<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<!-- HEADER -->
+										<div class="modal-header">
+											<h2 class="modal-title">
+												WARNING
+											</h2>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<!-- BODY -->
+										<div class="modal-body">
+											<form id="confirmDeleteForm" method="GET" action="">
+												<p class="text-warning">Are you sure you want to remove this property?</p>
+												<p class="text" id="prop_info_text"></p>
+												<p class="text" id="prop_id_text" hidden=true></p>
+												<div class="modal-footer no-bd">
+													<button type="submit" id="confirmDeleteButton" class="btn btn-primary">Confrim</button>
+													<button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+												</div>
+											</form>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="/static/assets/js/setting-demo.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_ogQ9dqwxiWZTead0L4Ga1wawqFG72zM&libraries=places&callback=initMap" async defer></script>
+
+	<script >
+		$(document).ready(function() {
+			$('#basic-datatables').DataTable({
+			});
+
+			$('#multi-filter-select').DataTable( {
+				"pageLength": 5,
+				initComplete: function () {
+					this.api().columns().every( function () {
+						var column = this;
+						var select = $('<select class="form-control"><option value=""></option></select>')
+						.appendTo( $(column.footer()).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+							column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+						} );
+
+						column.data().unique().sort().each( function ( d, j ) {
+							select.append( '<option value="'+d+'">'+d+'</option>' )
+						} );
+					} );
+				}
+			});
+		});
+		$('#confrimDeleteButton').modal('hide');
+
+	</script>
+
+	<script>
+		function initMap() {
+			var options = {
+				componentRestrictions: {country: ["aus", "nz", "uk"]}
+			};
+
+			var input = document.getElementById('addAddress');
+			var autocomplete = new google.maps.places.Autocomplete(input, options);
+			autocomplete.setFields(["address_component"]);
+			
+			$('#addAddressModal').modal('hide');
+		}
+	</script>
+	
+	<script>
+		$('#confirmDelete').on('show.bs.modal', function(e) {
+				//get prop-id attribute of the clicked element
+				var propId = $(e.relatedTarget).data('prop-id');
+				var propInfo = $(e.relatedTarget).data('prop-info');
+		
+				//populate the textbox
+				document.getElementById('prop_info_text').innerText = propInfo;
+				// send the form action
+				document.getElementById('confirmDeleteForm').action = "/remove-property/" + propId;
+		});
+
+	</script>
+
+
+{% endblock javascripts %}
+
