@@ -20,7 +20,7 @@ zDev_tools
 
 # other
 .DS_Store
-.vscode
+.vscode/
 
 # sphinx docs 
 _build

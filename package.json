@@ -1,17 +1,13 @@
 {
-  "name": "priv-flask-dashboard-atlantis-dark-pro",
-  "mastertemplate": "boilerplate-code-flask-dashboard",
+  "name": "estavvy",
+  "mastertemplate": "property-dashboard",
   "version": "1.0.1",
   "description": "Template project - Flask Boilerplate Code",
   "repository": {
       "type": "git",
-      "url": "https://github.com/app-generator/priv-flask-dashboard-atlantis-dark-pro"
+      "url": "https://github.com/danielfarahani/estavvy"
   },
-  "bugs": {
-      "url": "https://github.com/app-generator/flask-dashboard-atlantis-dark-pro/issues",
-      "email": "support@appseed.us"
-  },
-  "author": "AppSeed App Generator <support@appseed.us> (https://appseed.us)",
+  "author": "Dan Farahani",
   "engines": {
       "node": ">=10.0.0"
   },
