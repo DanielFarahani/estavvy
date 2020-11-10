@@ -2,7 +2,7 @@
   "name": "estavvy",
   "mastertemplate": "property-dashboard",
   "version": "1.0.1",
-  "description": "Template project - Flask Boilerplate Code",
+  "description": "Manage the income and expenses or your property to know the valuation",
   "repository": {
       "type": "git",
       "url": "https://github.com/danielfarahani/estavvy"
