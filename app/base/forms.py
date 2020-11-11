@@ -15,4 +15,4 @@ class CreateAccountForm(FlaskForm):
     password = PasswordField('Password', id='pwd_create', validators=[DataRequired()])
 
 
-# TODO forgot user/email/password
+# TODO-feature forgot user/email/password

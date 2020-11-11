@@ -67,7 +67,7 @@ def register():
     user = User(**request.form)
 
     return render_template('accounts/register.html', 
-                            msg='User created please <a href="/login">login</a>', 
+                            msg='User created please <a href="/login">Login</a>', 
                             success=True,
                             form=create_account_form)
 
@@ -75,7 +75,7 @@ def register():
     return render_template('accounts/register.html', form=create_account_form)
 
 
-## TODO forgot password
+## TODO-feature forgot password
 @blueprint.route('/reset', methods=['GET', 'POST'])
 def reset():
   pass

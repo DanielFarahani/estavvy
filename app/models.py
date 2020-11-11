@@ -31,7 +31,7 @@ class User(db.Model, UserMixin):
 
 
 class Properties(db.Model):
-    # TODO change datetime type
+    # TODO-prod change datetime type
     __tablename__ = 'Properties'
     propertyId = Column(Integer, primary_key=True)
     userId = db.Column(Integer, db.ForeignKey('User.id'))
@@ -51,7 +51,7 @@ class Properties(db.Model):
 
 
 # class PropertyFinancials(db.Model):
-#     # TODO change datetime type
+#     # TODO-prod change datetime type
 #     __tablename__ = 'PropertyFinancials'
 #     propertyId = Column(Integer, primary_key=True)
 #     saleValuation = Column(Integer)

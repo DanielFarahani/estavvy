@@ -7,7 +7,7 @@ from app import login_manager, db
 from jinja2 import TemplateNotFound
 from app.models import User, Properties, Address
 
-# localy importing corelogic wrapper remove in production
+# TODO-prod localy importing corelogic wrapper remove in production
 sys.path.append("/Users/df/other/corelogic_pyclient")
 from corelogic.property import (suggest, search, valuations, details)
 
@@ -28,7 +28,6 @@ def index():
   properties = inject_property_profile()['properties']
 
   overview['count'] = len(properties)
-  # TODO sum valuations, incomes, costs (maybe in db)
 
   return render_template('home.html', summary=overview)
 
