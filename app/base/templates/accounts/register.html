@@ -52,14 +52,14 @@
 
 						<div class="form-group form-action-d-flex mb-3">
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="rememberme" onkeyup="changeDetected">
-                <label class="custom-control-label m-0" for="rememberme">
+								<input type="checkbox" class="custom-control-input" id="terms" onchange="changeDetected();">
+                <label class="custom-control-label m-0" for="terms">
                   <a href="https://esetavvy.com/tnc" target="_blank">
                     Agree the terms
                   </a>
                 </label>
 							</div>
-							<button type="submit" name="register" class="btn btn-secondary col-md-5 float-right mt-3 mt-sm-0 fw-bold" disabled=True>Register</button>
+							<button type="submit" name="register" id="register" class="btn btn-secondary col-md-5 float-right mt-3 mt-sm-0 fw-bold" disabled=True>Register</button>
             </div>
             
 						<div class="login-account">
@@ -77,9 +77,12 @@
 
 {% block javascripts %}
   <script>
-    function changeDetected(){
-      if ($('#rememberme').attr('checked') != undefined){
+    function changeDetected(){    
+      term_checked = document.getElementById('terms').checked
+      if (term_checked){
         $('#register').removeAttr('disabled');
+      } else {
+        $('#register').attr('disabled', 'disabled');
       }
     }
   </script>
