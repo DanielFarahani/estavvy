@@ -6,10 +6,7 @@ from flask_login import login_required, current_user
 from app import login_manager, db
 from jinja2 import TemplateNotFound
 from app.models import User, Properties, Address
-
-# TODO-prod localy importing corelogic wrapper remove in production
-sys.path.append("/Users/df/other/corelogic_pyclient")
-from corelogic.property import (suggest, search, valuations, details)
+from corelogic.property import (Suggest, Search, Valuations, Details)
 
 
 # add data to global context for all templates
@@ -49,15 +46,13 @@ def properties():
 def property_view(pid):
   prop = Properties.query.filter_by(propertyId=pid).\
     join(Address).all()
-  # print('=============', file=sys.stderr)
-  # print(prop[0].address[0].street, file=sys.stderr)
-  # print('=============', file=sys.stderr)
   return render_template('property.html', property=prop)
 
 
 @blueprint.route('/add-property', methods=['POST'])
 @login_required
 def add_properties():
+  # TODO fix not property found error
   ## get address
   address = request.form.get('address')
   address = ' '.join(address.replace(',', '').split()[:-1])
