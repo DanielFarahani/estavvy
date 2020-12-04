@@ -25,5 +25,5 @@ urllib3==1.25.11
 Werkzeug==1.0.1
 WTForms==2.3.3
 psycopg2-binary==2.8.6
-corelogic-pyclient==0.1.2
+corelogic-pyclient
 python-dotenv==0.15.0
